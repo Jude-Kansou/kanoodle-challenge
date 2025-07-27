@@ -1,5 +1,5 @@
 # puzzle/board.py
-"""Lightweight 11 × 5 board to host Kanoodle pieces."""
+#Lightweight 11 × 5 board to host Kanoodle pieces.
 
 from typing import Iterable, List, Tuple
 from puzzle.piece import Piece          # dataclass
@@ -16,7 +16,7 @@ class Board:
         self.cols = cols
         self.grid: List[List[str]] = [[self.EMPTY] * cols for _ in range(rows)]
 
-        # 🚀  self‑initialise every piece once
+        
         self.pieces: dict[str, Piece] = {
             name: Piece(name, coords, name[0].upper())
             for name, coords in PIECES.items()
@@ -63,7 +63,7 @@ class Board:
 
         except AssertionError:
             print(
-                f"⚠️  No matching piece at anchor ({anchor_row}, {anchor_col}); "
+                f" No matching piece at anchor ({anchor_row}, {anchor_col}); "
                 "board left unchanged."
             )
             return False  
