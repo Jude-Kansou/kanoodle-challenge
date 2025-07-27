@@ -57,9 +57,13 @@ kanoodle-challenge/
 Got ideas for how to solve this? Want to help with a visualizer, a solver strategy, or just watch it grow?  
 Feel free to open an issue or DM me on IG: **[@judekansou]**
 
+![Board Example](assets/Board.jpeg)
+*A simple 11x5 grid for the puzzle.*
 
+![Pieces Example](assets/Pieces.jpeg)
+*Board and the pieces.*
 
-This is the rant:
+## Story
 
 My bad for the pictures but my housemate took the game and these are the only pictures I got of it.
 
