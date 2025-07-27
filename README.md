@@ -3,6 +3,8 @@ A collaborative Kanoodle puzzle challenge (solve, submit, analyze)
 
 Date: 11:30 ET July 27, 2025
 
+CHECK ASSETS FOR PICTURES
+
 # 🧩 Kanoodle Challenge
 
 Welcome to the **Kanoodle Challenge**. A collaborative puzzle-solving project where we use Python to solve custom Kanoodle-style puzzles.
