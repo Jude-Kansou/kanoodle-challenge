@@ -6,6 +6,8 @@ Run with:  python -m sandbox.main
 from puzzle.board import Board
 from puzzle.pieces import PIECES
 
+print(PIECES)
+
 def demo():
     board = Board()
     orange = PIECES["Orange"]
