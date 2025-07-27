@@ -40,11 +40,33 @@ class Board:
             self.grid[r][c] = label
         return True
 
-    def remove_piece(self, piece: Iterable[Coord], anchor_row: int, anchor_col: int) -> None:
+    def remove_piece(
+        self, piece: Iterable[Coord], anchor_row: int, anchor_col: int
+        ) -> None:
+        """
+        Undo a placement.
 
-        for r, c in self._cells(piece, anchor_row, anchor_col):
-            assert self.grid[r][c] != self.EMPTY, "Attempted to remove from an empty square"
-            self.grid[r][c] = self.EMPTY
+        *If the piece is not fully present at the requested anchor, the board is
+        left unchanged and a short message is printed.*
+        """
+        cells = [(anchor_row + r_off, anchor_col + c_off) for r_off, c_off in piece]
+
+        try:
+            # --- validation pass (no mutations) ----------------------------------
+            for r, c in cells:
+                if self.grid[r][c] == self.EMPTY:
+                    raise AssertionError  # triggers the except block
+            # --- removal pass ----------------------------------------------------
+            for r, c in cells:
+                self.grid[r][c] = self.EMPTY
+
+        except AssertionError:
+            # Nothing was changed above, so the board is still consistent.
+            print(
+                f"⚠️  No matching piece at anchor ({anchor_row}, {anchor_col}); "
+                "board left unchanged."
+            )
+
 
 
     def __str__(self) -> str:
