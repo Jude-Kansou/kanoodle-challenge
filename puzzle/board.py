@@ -1,11 +1,11 @@
 # puzzle/board.py
-#Lightweight 11 × 5 board to host Kanoodle pieces.
+# Lightweight 11 × 5 board to host Kanoodle pieces.
 
 from typing import Iterable, List, Tuple
 from puzzle.piece import Piece          # dataclass
 from puzzle.pieces import PIECES        # raw dict
 
-Coord = Tuple[int, int]        # (row, col)
+Coord = Tuple[int, int]   
 
 
 class Board:
@@ -34,7 +34,7 @@ class Board:
         return True
 
 
-    def place_piece(
+    def _place_piece(
         self, piece: Iterable[Coord], anchor_row: int, anchor_col: int, label: str
     ) -> bool:
         cells = self._cells(piece, anchor_row, anchor_col)
@@ -48,46 +48,49 @@ class Board:
             self.grid[r][c] = label
         return True
 
-    def remove_piece(
-        self, piece: Iterable[Coord], anchor_row: int, anchor_col: int
-        ) -> bool:                               # ← return type is now bool
-        cells = [(anchor_row + r_off, anchor_col + c_off) for r_off, c_off in piece]
+    def _remove_piece(self, piece: Piece, anchor_row: int, anchor_col: int) -> bool:
+        cells = [(anchor_row + r_off, anchor_col + c_off) for r_off, c_off in piece.coords]
 
         try:
+           
             for r, c in cells:
                 if self.grid[r][c] == self.EMPTY:
                     raise AssertionError
+            
             for r, c in cells:
                 self.grid[r][c] = self.EMPTY
-            return True                     # ← success
+            return True
 
         except AssertionError:
             print(
-                f" No matching piece at anchor ({anchor_row}, {anchor_col}); "
-                "board left unchanged."
+                f"The {piece.name} piece at anchor ({anchor_row}, {anchor_col}) "
+                "was not found; board left unchanged.\n"
             )
-            return False  
+            return False
 
     def place(self, name: str, row: int, col: int) -> bool:
-        """
-        High‑level helper. Returns True if the piece was placed,
-        False if it could not be placed (collision or OOB).
-        Internally delegates to place_piece, so all checks still apply.
-        """
         p = self.pieces[name]
-        return self.place_piece(p.coords, row, col, p.label)
+        success = self._place_piece(p.coords, row, col, p.label)
+
+        if not success:   # ← 4‑line addition starts here
+            print(
+                f"Cannot place {name} at ({row}, {col}): "
+                "square out‑of‑bounds or already occupied.\n"
+            )
+        return success 
     
+
     def remove(self, name: str, row: int, col: int) -> bool:
         """
         High‑level helper. Returns True if the piece was removed,
         False if the piece wasn't found at that anchor. All safety
         logic—including the try/except we added—is still inside remove_piece.
         """
-        p = self.pieces[name]
-        return self.remove_piece(p.coords, row, col)
+        p = self.pieces[name]         
+        return self._remove_piece(p, row, col)
 
     def __str__(self) -> str:
         return "\n".join(" ".join(row) for row in self.grid)
 
-    def print(self) -> None:  # keep your original helper for convenience
+    def print(self) -> None:  \
         print(self.__str__())
