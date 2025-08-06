@@ -34,6 +34,12 @@ class Board:
 
         self.placed: dict[str, Tuple[int,int,int]] = {}
 
+    def __str__(self) -> str:
+        return "\n".join(" ".join(row) for row in self.grid)
+
+    def print(self) -> None:  \
+        print(self.__str__())
+
     def _cells(self, piece: Iterable[Coord], anchor_row: int, anchor_col: int) -> List[Coord]:
         return [(anchor_row + r_off, anchor_col + c_off) for r_off, c_off in piece]
 
@@ -58,12 +64,6 @@ class Board:
         for r, c in cells:
             self.grid[r][c] = label
         return True
-
-    def __str__(self) -> str:
-        return "\n".join(" ".join(row) for row in self.grid)
-
-    def print(self) -> None:  \
-        print(self.__str__())
     
     def place(self, name: str, orient_id: int, row: int, col: int) -> bool:
         p = self.pieces[name]

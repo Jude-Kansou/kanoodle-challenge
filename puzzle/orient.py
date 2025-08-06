@@ -27,6 +27,3 @@ def generate_orientations(base: List[Coord]):
             boxes.append((h, w))
     return orients, boxes
 
-# def flip(piece: List[Coord]) -> List[Coord]:
-#     c_max = max(c for _, c in piece)          # right-most column
-#     return [(r, (-c) + c_max) for r, c in piece]
